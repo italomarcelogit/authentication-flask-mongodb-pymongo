@@ -1,0 +1,33 @@
+{% block header %}
+<h1>Tutorial - Auth Python/Flask + MongoDB</h1>
+{% if local=="cat"  %} 
+<h2 class="alert alert-success" role="alert">Categoria {{np}}</h2>
+{% elif local=="login"  %} 
+<h2 class="alert alert-danger" role="alert">Authentication</h2>
+{% else %}
+<h2 class="alert alert-primary" role="alert">Home</h2>
+{% endif %}  
+<ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link" href="/">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/cat/1">get 1</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/cat/2">get 2</a>
+  </li>
+  {% if session['s_logado']==1 %}
+  <li class="nav-item">
+    <a class="nav-link disabled" href="/minha-conta">Minha Conta</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="/logout">Sair</a>
+  </li>
+  {% else %}
+  <li class="nav-item">
+    <a class="nav-link disabled" href="/login">Login</a>
+  </li>
+  {% endif%}
+</ul>
+{% endblock %}

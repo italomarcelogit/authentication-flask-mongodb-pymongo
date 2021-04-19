@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Login To Store{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+    
+    <!-- PESQUISA TAGS -->
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+				{% if form=="login" %}	
+					<h3>Efetue o seu login</h3>
+					{% if ok==1 %}
+					<div class="alert alert-success" role="alert">{{ msg }}</div>
+					{% elif ok==2 %}
+					<div class="alert alert-warning" role="alert">{{ msg }}</div>
+					{% endif %}
+					<form action="/login" method="POST">
+
+						<div class="form-group">
+							<label class="form-label">Email</label>
+							<input class="form-control" type="email" name="email" placeholder="email@dominio.com" required>
+						</div>
+						<div class="form-group">
+							<label class="form-label">Senha</label>
+							<input class="form-control" type="password" name="senha" required>
+						</div>
+						<button class="btn btn-info" type="submit">Entrar</button>
+						<button class="btn btn-primary" type="button" onclick="window.location.href='/registro'">
+							Cadastre-se
+						</button>
+						<button class="btn btn-link btn-sm" type="button" onclick="window.location.href='/esqueci'">
+							Esqueci a senha
+						</button>
+						
+					</form>
+				
+				{% elif form=="autenticado" %}	
+						<h3>Minha Conta</h3>
+						{% if ok==1 %}
+						<div class="alert alert-success" role="alert">{{ msg }}</div>
+						{% elif ok==2 %}
+						<div class="alert alert-warning" role="alert">{{ msg }}</div>
+						{% endif %}
+					
+
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="form-label">Nome</label>
+                            {{ session['s_nome']}}
+                        </div>
+                        <div class="form-group">
+							<label for="exampleInputEmail1" class="form-label">Email</label>
+                            {{ session['s_email']}}
+                        </div>
+                        
+					
+
+				{% elif form=="registro" %}	
+					<h3>Efetue o seu cadastro</h3>
+					{% if ok==1 %}
+					<div class="alert alert-success" role="alert">{{ msg }}</div>
+					{% elif ok==2 %}
+					<div class="alert alert-warning" role="alert">{{ msg }}</div>
+					{% endif %}
+					<form action="/registro" method="POST">
+
+						<div class="form-group">
+							<label for="exampleInputEmail1" class="form-label">Nome</label>
+                            <input class="form-control" type="text" name="nome" placeholder="Nome" required>
+                        </div>
+                        <div class="form-group">
+							<label for="exampleInputEmail1" class="form-label">Email</label>
+                            <input class="form-control" type="text" name="email" placeholder="email" required>
+                        </div>
+                        <div class="form-group">
+							<label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input class="form-control" type="password" name="senha"required>
+                        </div>
+                        <button class="btn btn-info" type="submit">
+                            Salvar
+                        </button>
+						<button class="btn btn-warning" type="button" onclick="window.location.href='/login'">
+							Cancelar
+						</button>
+					</form>
+				{% elif form=="esqueci" %}	
+					<h3>Confirme seu email</h3>
+					<form action="/esqueci" method="POST">
+						<div class="form-group">
+							<label class="form-label">Email</label>
+							<input class="form-control" type="email" name="email" placeholder="email@dominio.com" required>
+						</div>
+						
+						<button class="btn btn-info" type="submit">Enviar email</button>
+						<button class="btn btn-warning" type="button" onclick="window.location.href='/login'">
+							Cancelar
+						</button>
+					</form>
+				{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+<div id="content">
+
+<p id="stat"></p>
+</div>
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+    
+    <!-- PESQUISA TAGS -->
+    <div class="row">
+        <div class="col-md-12">
+            
+                <div class="card-body">
+                    {% for entry in entries %}
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="{{ url_for('static', filename='produtos/'+entry.imagem)}}" alt="{{ entry.nome }}" class="img-thumbnail">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="jumbotron">
+                                <h2>
+                                    <a href="view/produto/{{entry.id}}">
+                                        {{ entry.nome }}
+                                    </a>
+                                </h2>
+                                <h4>Categoria {{ entry.id_categoria }}</h4>
+                                <h6>Categoria {{ entry.descricao }}</h6>
+                                <button type="button" class="btn btn-outline-success">
+                                    <img src="{{url_for('static', filename='icon-cart.png')}}" class="img-fluid" alt="Adicione ao carrinho"> 
+                                    <h5>R${{ entry.valor }},00</h5>
+                                </button>
+                            </div>
+                                
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+
+{% endblock %}
