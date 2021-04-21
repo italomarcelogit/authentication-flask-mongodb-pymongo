@@ -2,8 +2,10 @@
 <h1>Tutorial - Auth Python/Flask + MongoDB</h1>
 {% if local=="cat"  %} 
 <h2 class="alert alert-success" role="alert">Categoria {{np}}</h2>
-{% elif local=="login"  %} 
-<h2 class="alert alert-danger" role="alert">Authentication</h2>
+{% elif form=="login"  %} 
+<h2 class="alert alert-danger" role="alert">Acesse seus dados</h2>
+{% elif form=="autenticado"  %} 
+<h2 class="alert alert-warning" role="alert">Meus dados</h2>
 {% else %}
 <h2 class="alert alert-primary" role="alert">Home</h2>
 {% endif %}  

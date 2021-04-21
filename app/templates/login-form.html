@@ -15,7 +15,7 @@
 					<h3>Efetue o seu login</h3>
 					{% if ok==1 %}
 					<div class="alert alert-success" role="alert">{{ msg }}</div>
-					{% elif ok==2 %}
+					{% elif ok==0 %}
 					<div class="alert alert-warning" role="alert">{{ msg }}</div>
 					{% endif %}
 					<form action="/login" method="POST">

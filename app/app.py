@@ -59,34 +59,38 @@ def xyz15():
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
+        # print(request.method)
         form = request.form
         email = form.get('email')
         senha = form.get('senha')
-        
+        # print(email, senha)
         ok = 0
         msg = ''
-        session.clear()
         qtdLogin = mongo.db.usuarios.count_documents({"email": email})
-        check = mongo.db.usuarios.find_one_or_404({"email": email})
-        # print(f"LOGIN: {check['email']}\nSENHA: {check['senha']}\nQTD: {qtdLogin}")
-        try:
-            if qtdLogin == 0: # mongo.db.usuarios.count_documents({"email": email}) == 0:
+        print(qtdLogin)
+        if qtdLogin == 0: # mongo.db.usuarios.count_documents({"email": email}) == 0:
                 msg = 'Usuário não existe.'
                 # print(msg)
-            elif qtdLogin==1 and not check_password_hash(check['senha'], senha): # mongo.db.usuarios.count_documents({"email": email, "senha": BinData(0, senha_crypt)}) == 0:
-                msg = 'Senha incorreta'
-                # print(f"SENHA: {check['senha']}\nFORM: {senha}")
-                # print(msg)
-            elif qtdLogin==1:
-                ok=1
-                senha_crypt = generate_password_hash(senha, 10)
-                session['s_nome'] = check['nome']
-                session['s_email'] = check['email']
-                session['s_logado'] = 1
-                msg = "Usuário conectado"
-                print(session['s_email'], session['s_logado'])
-        except Exception as e:
-            msg = f'Erro: {e}'
+        elif qtdLogin==1:
+            try:
+                check = mongo.db.usuarios.find_one_or_404({"email": email})
+                print(f"LOGIN: {check['email']}\nSENHA: {check['senha']}\nQTD: {qtdLogin}")
+                
+                if not check_password_hash(check['senha'], senha): # mongo.db.usuarios.count_documents({"email": email, "senha": BinData(0, senha_crypt)}) == 0:
+                    msg = 'Senha incorreta'
+                    # print(f"SENHA: {check['senha']}\nFORM: {senha}")
+                    # print(msg)
+                else:
+                    session.clear()
+                    ok=1
+                    senha_crypt = generate_password_hash(senha, 10)
+                    session['s_nome'] = check['nome']
+                    session['s_email'] = check['email']
+                    session['s_logado'] = 1
+                    msg = "Usuário conectado"
+                    print(session['s_email'], session['s_logado'])
+            except Exception as e:
+                msg = f'Erro: {e}'
         if ok==1:
             return render_template('login.html', form='autenticado', msg=msg, ok=ok)
         else:
